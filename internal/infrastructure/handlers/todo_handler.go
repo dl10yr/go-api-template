@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/dl10yr/go-api-template/internal/interfaces/controllers"
 )
 
 type Handler interface {
@@ -10,15 +11,16 @@ type Handler interface {
 }
 
 type handler struct {
+	todoController controllers.TodoController
 }
 
-func NewToDoHandler() Handler {
-	return &handler{}
+func NewToDoHandler(todoController controllers.TodoController) Handler {
+	return &handler{todoController}
 }
 
 func (ha *handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
-		fmt.Fprintln(w, "Hello World")
+		ha.todoController.GetAllTodos(w, r)
 	}
 }

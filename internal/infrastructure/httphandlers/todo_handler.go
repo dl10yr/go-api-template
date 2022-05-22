@@ -1,4 +1,4 @@
-package handlers
+package httphandlers
 
 import (
 	"net/http"
@@ -11,10 +11,10 @@ type Handler interface {
 }
 
 type handler struct {
-	todoController controllers.TodoController
+	todoController *controllers.TodoController
 }
 
-func NewToDoHandler(todoController controllers.TodoController) Handler {
+func NewToDoHandler(todoController *controllers.TodoController) Handler {
 	return &handler{todoController}
 }
 

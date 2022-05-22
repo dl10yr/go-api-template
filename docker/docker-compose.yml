@@ -1,0 +1,18 @@
+version: '2'
+services:
+  api:
+    image: go-api-template
+    container_name: go-api-template
+    build:
+      context: ../
+      dockerfile: ./docker/api/Dockerfile
+    ports:
+      - "127.0.0.1:8080:8080"
+  db:
+    image: go-api-template-db
+    container_name: go-api-template-db
+    build: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "127.0.0.1:3306:3306"

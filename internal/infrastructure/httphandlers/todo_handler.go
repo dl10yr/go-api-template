@@ -22,5 +22,7 @@ func (ha *handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		ha.todoController.GetAllTodos(w, r)
+	case http.MethodPost:
+		ha.todoController.InsertTodo(w, r)
 	}
 }

@@ -39,3 +39,19 @@ func (co *TodoController) GetAllTodos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/json")
 	w.Write(output)
 }
+
+func (co *TodoController) InsertTodo(w http.ResponseWriter, r *http.Request) {
+	var in domain.TodoInput
+	json.NewDecoder(r.Body).Decode(&in)
+	inserted, err := co.interactor.InsertTodo(in)
+
+	if err != nil {
+		panic(err)
+	}
+
+	w.Header().Set("content-type", "application/json")
+	output, _ := json.MarshalIndent(map[string]interface{}{
+		"data": inserted,
+	}, "", "\t\t")
+	w.Write(output)
+}

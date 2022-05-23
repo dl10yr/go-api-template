@@ -14,9 +14,14 @@ func NewTodoInteractor(repo TodoRepository) domain.TodoInteractor {
 
 type TodoRepository interface {
 	GetAll() (domain.Todos, error)
+	Insert(todoInput domain.TodoInput) (int, error)
 }
 
 func (in *TodoInteractor) TodosAll() (todos domain.Todos, err error) {
 	todos, err = in.todoRepository.GetAll()
 	return
+}
+
+func (in *TodoInteractor) InsertTodo(todoInput domain.TodoInput) (int, error) {
+	return in.todoRepository.Insert(todoInput)
 }

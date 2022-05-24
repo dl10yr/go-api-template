@@ -3,10 +3,12 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/dl10yr/go-api-template/internal/domain"
 	"github.com/dl10yr/go-api-template/internal/interfaces/database"
 	"github.com/dl10yr/go-api-template/internal/usecase"
+	"github.com/gorilla/mux"
 )
 
 type TodoController struct {
@@ -55,3 +57,22 @@ func (co *TodoController) InsertTodo(w http.ResponseWriter, r *http.Request) {
 	}, "", "\t\t")
 	w.Write(output)
 }
+
+func (co *TodoController) DeleteTodo(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["todoId"], 10, 32)
+	if err != nil {
+		panic(err)
+	}
+	deleted, err := co.interactor.DeleteTodo(int(id))
+
+	w.Header().Set("content-type", "application/json")
+	output, _ := json.MarshalIndent(map[string]interface{}{
+		"deleted": deleted,
+	}, "", "\t\t")
+	w.Write(output)
+}
+
+// func (co *TodoController) UpdateTodo(w http.ResponseWriter, r *http.Request) {
+
+// }

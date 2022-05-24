@@ -42,3 +42,21 @@ func (repo *TodoRepository) Insert(input domain.TodoInput) (inserted int, err er
 	}
 	return int(i), nil
 }
+
+func (repo *TodoRepository) Delete(id int) (affected int, err error) {
+	exe, err := repo.Execute("DELETE FROM todo WHERE id = ?", id)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
+	rawAffected, err := exe.RowsAffected()
+	if err != nil {
+		return affected, err
+	}
+	return int(rawAffected), nil
+}
+
+// func (repo *TodoRepository) Update(id int, input domain.TodoInput) {
+
+// }

@@ -73,6 +73,19 @@ func (co *TodoController) DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	w.Write(output)
 }
 
-// func (co *TodoController) UpdateTodo(w http.ResponseWriter, r *http.Request) {
+func (co *TodoController) UpdateTodo(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.ParseInt(vars["todoId"], 10, 32)
+	if err != nil {
+		panic(err)
+	}
+	var in domain.TodoInput
+	json.NewDecoder(r.Body).Decode(&in)
+	updated, err := co.interactor.UpdateTodo(int(id), in)
 
-// }
+	w.Header().Set("content-type", "application/json")
+	output, _ := json.MarshalIndent(map[string]interface{}{
+		"updated": updated,
+	}, "", "\t\t")
+	w.Write(output)
+}

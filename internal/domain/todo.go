@@ -12,7 +12,7 @@ type TodoInteractor interface {
 	TodosAll() (Todos, error)
 	InsertTodo(input TodoInput) (int, error)
 	DeleteTodo(todoId int) (int, error)
-	// PutTodo(input TodoInput) (int, error)
+	UpdateTodo(todoId int, input TodoInput) (int, error)
 }
 
 type TodoInput struct {

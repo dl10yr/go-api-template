@@ -57,6 +57,16 @@ func (repo *TodoRepository) Delete(id int) (affected int, err error) {
 	return int(rawAffected), nil
 }
 
-// func (repo *TodoRepository) Update(id int, input domain.TodoInput) {
+func (repo *TodoRepository) Update(id int, input domain.TodoInput) (affected int, err error) {
+	exe, err := repo.Execute("UPDATE todo SET title = ?, is_ended = ? WHERE id = ?", input.Title, input.IsEnded, id)
+	if err != nil {
+		log.Print(err)
+		return
+	}
 
-// }
+	rawAffected, err := exe.RowsAffected()
+	if err != nil {
+		return affected, err
+	}
+	return int(rawAffected), nil
+}

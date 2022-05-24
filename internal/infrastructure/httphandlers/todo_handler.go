@@ -25,8 +25,8 @@ func (ha *handler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodDelete:
 			ha.todoController.DeleteTodo(w, r)
-			// case http.MethodPut:
-			// 	ha.todoController.UpdateTodo(w, r)
+		case http.MethodPut:
+			ha.todoController.UpdateTodo(w, r)
 		}
 		return
 	}

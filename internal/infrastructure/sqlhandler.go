@@ -21,6 +21,12 @@ type SqlResult struct {
 	Result sql.Result
 }
 
+func NewDummyHandler(db *sql.DB) database.SqlHandler {
+	sqlHandler := new(SqlHandler)
+	sqlHandler.Db = db
+	return sqlHandler
+}
+
 func NewSqlHandler() *SqlHandler {
 	dataSource := fmt.Sprintf("%s:%s%s/%s", config.MysqlUser, config.MysqlPassword, config.MysqlHost, config.MysqlDataBase)
 	Db, err := sql.Open("mysql", dataSource)
